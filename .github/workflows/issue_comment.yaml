@@ -32,15 +32,13 @@ jobs:
   comment_with_api:
     runs-on: ubuntu-latest
     steps:
-      - name:  Create comment with API
+      - name: Create comment with API
         run: |
-          gh apt -X POST \
-            http://api.github.com/repo/${ORGANIZATION}/${REPOSITORY}/issues/${ISSUE_NUMBER}
-            -f body='
-            Comment using API call
-            '
+          gh api -X POST \
+            https://api.github.com/repos/${{ env.ORGANIZATION }}/${{ env.REPOSITORY }}/issues/${{ env.ISSUE_NUMBER }}/comments \
+            -f body='Comment using API call'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORGANIZATION: ${{ github.event.organization.login }}
+          ORGANIZATION: ${{ github.event.repository.owner.login }}
           REPOSITORY: ${{ github.event.repository.name }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
