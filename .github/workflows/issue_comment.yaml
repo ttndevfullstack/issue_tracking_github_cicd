@@ -10,7 +10,8 @@ jobs:
     steps:
       - name: Dump GitHub context
         run: |
-          echo "${{ toJSON(github.event) }}" | jq . # Note: jq expects valid JSON
+          echo "${{ toJSON(github.event) }}" > event.json
+          cat event.json | jq '.'
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v4
