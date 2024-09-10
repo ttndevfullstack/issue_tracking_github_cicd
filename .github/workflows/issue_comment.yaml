@@ -6,10 +6,11 @@ on:
 
 jobs:
   comment-with-action:
-    runs-on: ubuntu-latest # Corrected typo
+    runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
-        run: echo "${{ toJSON(github.event) }}" | jq # Corrected quoting
+        run: |
+          echo "${{ toJSON(github.event) }}" | jq . # Note: jq expects valid JSON
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v4
